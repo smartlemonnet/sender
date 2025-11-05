@@ -1,0 +1,30 @@
+{
+  "name": "sender",
+  "version": "1.0.0",
+  "description": "sender del bluelime univers fatto con cursor",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
+    "client": "cd client && npm start",
+    "dev:full": "concurrently \"npm run dev\" \"npm run client\"",
+    "seed": "node seed.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-validator": "^7.3.0",
+    "imap-simple": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mailparser": "^3.9.0",
+    "mongoose": "^8.19.3",
+    "nodemailer": "^7.0.10",
+    "stripe": "^19.2.1"
+  }
+}
