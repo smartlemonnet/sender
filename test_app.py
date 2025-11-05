@@ -157,3 +157,24 @@ def test_send_campaign_already_sent(client):
     data = json.loads(response.data)
     assert response.status_code == 400
     assert 'already sent' in data['error']
+
+def test_create_contact_missing_email(client):
+    """Test creating contact without email"""
+    response = client.post('/api/contacts', json={'name': 'Test User'})
+    data = json.loads(response.data)
+    assert response.status_code == 400
+    assert 'error' in data
+
+def test_create_campaign_missing_fields(client):
+    """Test creating campaign without required fields"""
+    response = client.post('/api/campaigns', json={'name': 'Test Campaign'})
+    data = json.loads(response.data)
+    assert response.status_code == 400
+    assert 'error' in data
+
+def test_create_template_missing_fields(client):
+    """Test creating template without required fields"""
+    response = client.post('/api/templates', json={'name': 'Test Template'})
+    data = json.loads(response.data)
+    assert response.status_code == 400
+    assert 'error' in data

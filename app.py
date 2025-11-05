@@ -49,6 +49,11 @@ def register_routes(app):
         """Get all contacts or create a new contact"""
         if request.method == 'POST':
             data = request.json
+            
+            # Validate required fields
+            if not data or 'email' not in data:
+                return jsonify({'error': 'Email is required'}), 400
+            
             contact = Contact(
                 email=data['email'],
                 name=data.get('name', ''),
@@ -87,6 +92,11 @@ def register_routes(app):
         """Get all campaigns or create a new campaign"""
         if request.method == 'POST':
             data = request.json
+            
+            # Validate required fields
+            if not data or 'name' not in data or 'subject' not in data:
+                return jsonify({'error': 'Name and subject are required'}), 400
+            
             campaign = Campaign(
                 name=data['name'],
                 subject=data['subject'],
@@ -141,10 +151,14 @@ def register_routes(app):
             template = EmailTemplate.query.get(campaign.template_id)
         
         # Send emails (simulated for now)
+        # TODO: In production, implement actual email sending using:
+        # - SMTP server (e.g., Gmail, SendGrid, Mailgun)
+        # - Email content from template if available
+        # - Track delivery status and errors
+        # - Implement rate limiting and queue management
         sent_count = 0
         for contact in contacts:
-            # In production, this would actually send emails
-            # using SMTP or email service API
+            # Production implementation would send actual emails here
             sent_count += 1
         
         # Update campaign status
@@ -165,6 +179,11 @@ def register_routes(app):
         """Get all templates or create a new template"""
         if request.method == 'POST':
             data = request.json
+            
+            # Validate required fields
+            if not data or 'name' not in data or 'content' not in data:
+                return jsonify({'error': 'Name and content are required'}), 400
+            
             template = EmailTemplate(
                 name=data['name'],
                 content=data['content'],
