@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import DOMPurify from 'dompurify';
 import api from '../services/api';
 
 const EmailList = () => {
@@ -132,7 +133,7 @@ const EmailList = () => {
               <hr style={{ margin: '20px 0' }} />
               <div>
                 {selectedEmail.html ? (
-                  <div dangerouslySetInnerHTML={{ __html: selectedEmail.html }} />
+                  <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selectedEmail.html) }} />
                 ) : (
                   <pre style={{ whiteSpace: 'pre-wrap' }}>{selectedEmail.text}</pre>
                 )}

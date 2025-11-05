@@ -3,6 +3,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const EmailPackage = require('../models/EmailPackage');
 const Purchase = require('../models/Purchase');
 const auth = require('../middleware/auth');
+const adminCheck = require('../middleware/adminCheck');
 
 const router = express.Router();
 
@@ -110,18 +111,28 @@ router.get('/my-purchases', auth, async (req, res) => {
 });
 
 // Admin: Create package
-router.post('/packages', auth, async (req, res) => {
+router.post('/packages', auth, adminCheck, async (req, res) => {
   try {
     const { name, description, price, features, storageGB, emailsPerDay, customDomain } = req.body;
+    
+    // Validate required fields
+    if (!name || !description || price === undefined || !storageGB || !emailsPerDay) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+    
+    // Validate numeric fields
+    if (price < 0 || storageGB < 0 || emailsPerDay < 0) {
+      return res.status(400).json({ message: 'Price, storage, and email limits must be positive' });
+    }
     
     const package = new EmailPackage({
       name,
       description,
       price,
-      features,
+      features: features || [],
       storageGB,
       emailsPerDay,
-      customDomain,
+      customDomain: customDomain || false,
     });
 
     await package.save();

@@ -124,6 +124,10 @@ router.get('/list', auth, async (req, res) => {
   try {
     const { status, limit = 50, skip = 0 } = req.query;
     
+    // Validate and sanitize limit and skip
+    const parsedLimit = Math.min(Math.max(parseInt(limit) || 50, 1), 100);
+    const parsedSkip = Math.max(parseInt(skip) || 0, 0);
+    
     const query = { userId: req.userId };
     if (status) {
       query.status = status;
@@ -131,8 +135,8 @@ router.get('/list', auth, async (req, res) => {
 
     const emails = await Email.find(query)
       .sort({ createdAt: -1 })
-      .limit(parseInt(limit))
-      .skip(parseInt(skip));
+      .limit(parsedLimit)
+      .skip(parsedSkip);
 
     const total = await Email.countDocuments(query);
 
