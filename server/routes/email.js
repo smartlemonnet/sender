@@ -2,6 +2,7 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const imaps = require('imap-simple');
 const { simpleParser } = require('mailparser');
+const { body, query, param, validationResult } = require('express-validator');
 const Email = require('../models/Email');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
@@ -9,8 +10,20 @@ const auth = require('../middleware/auth');
 const router = express.Router();
 
 // Send email
-router.post('/send', auth, async (req, res) => {
+router.post('/send', [
+  auth,
+  body('to').notEmpty().withMessage('Recipient is required'),
+  body('subject').notEmpty().withMessage('Subject is required'),
+  body('text').notEmpty().withMessage('Message text is required'),
+  body('html').optional().trim(),
+], async (req, res) => {
   try {
+    // Check validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const { to, subject, text, html } = req.body;
     const user = await User.findById(req.userId);
 
@@ -29,13 +42,19 @@ router.post('/send', auth, async (req, res) => {
       },
     });
 
+    // Sanitize HTML to prevent XSS - remove script tags and event handlers
+    const sanitizedHtml = html ? html
+      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+      .replace(/on\w+\s*=\s*["'][^"']*["']/gi, '')
+      .replace(/on\w+\s*=\s*[^\s>]*/gi, '') : '';
+
     // Send email
     const info = await transporter.sendMail({
       from: user.emailConfig.smtp.user,
       to: Array.isArray(to) ? to.join(', ') : to,
       subject,
       text,
-      html,
+      html: sanitizedHtml,
     });
 
     // Save to database
@@ -45,7 +64,7 @@ router.post('/send', auth, async (req, res) => {
       to: Array.isArray(to) ? to : [to],
       subject,
       text,
-      html,
+      html: sanitizedHtml,
       status: 'sent',
       sentAt: new Date(),
     });
@@ -120,8 +139,19 @@ router.get('/fetch', auth, async (req, res) => {
 });
 
 // Get all emails for user
-router.get('/list', auth, async (req, res) => {
+router.get('/list', [
+  auth,
+  query('status').optional().isIn(['sent', 'received', 'draft', 'failed']).withMessage('Invalid status'),
+  query('limit').optional().isInt({ min: 1, max: 100 }).withMessage('Limit must be between 1 and 100'),
+  query('skip').optional().isInt({ min: 0 }).withMessage('Skip must be non-negative'),
+], async (req, res) => {
   try {
+    // Check validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const { status, limit = 50, skip = 0 } = req.query;
     
     // Validate and sanitize limit and skip

@@ -1,13 +1,24 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
 
 const router = express.Router();
 
 // Register
-router.post('/register', async (req, res) => {
+router.post('/register', [
+  body('email').isEmail().normalizeEmail().withMessage('Valid email is required'),
+  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+  body('name').trim().notEmpty().withMessage('Name is required'),
+], async (req, res) => {
   try {
+    // Check validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const { email, password, name } = req.body;
 
     // Check if user already exists
@@ -47,8 +58,17 @@ router.post('/register', async (req, res) => {
 });
 
 // Login
-router.post('/login', async (req, res) => {
+router.post('/login', [
+  body('email').isEmail().normalizeEmail().withMessage('Valid email is required'),
+  body('password').notEmpty().withMessage('Password is required'),
+], async (req, res) => {
   try {
+    // Check validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const { email, password } = req.body;
 
     // Find user

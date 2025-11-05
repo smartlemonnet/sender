@@ -1,5 +1,6 @@
 const express = require('express');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const { param, body, validationResult } = require('express-validator');
 const EmailPackage = require('../models/EmailPackage');
 const Purchase = require('../models/Purchase');
 const auth = require('../middleware/auth');
@@ -31,8 +32,17 @@ router.get('/packages/:id', async (req, res) => {
 });
 
 // Create payment intent
-router.post('/create-payment-intent', auth, async (req, res) => {
+router.post('/create-payment-intent', [
+  auth,
+  body('packageId').isMongoId().withMessage('Valid package ID is required'),
+], async (req, res) => {
   try {
+    // Check validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const { packageId } = req.body;
     
     const package = await EmailPackage.findById(packageId);
@@ -60,8 +70,18 @@ router.post('/create-payment-intent', auth, async (req, res) => {
 });
 
 // Process purchase
-router.post('/purchase', auth, async (req, res) => {
+router.post('/purchase', [
+  auth,
+  body('packageId').isMongoId().withMessage('Valid package ID is required'),
+  body('paymentIntentId').notEmpty().withMessage('Payment intent ID is required'),
+], async (req, res) => {
   try {
+    // Check validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const { packageId, paymentIntentId } = req.body;
     
     const package = await EmailPackage.findById(packageId);
