@@ -113,8 +113,8 @@ tar -xzf sender-backup-YYYYMMDD.tar.gz
 
 ## Note Importanti
 
-- **Node Modules**: Le copie non includono `node_modules` (execute `npm install`)
-- **Build Artifacts**: Le copie non includono `.next` (execute `npm run build`)
+- **Node Modules**: Le copie non includono `node_modules` (esegui `npm install`)
+- **Build Artifacts**: Le copie non includono `.next` (esegui `npm run build`)
 - **File Sensibili**: Lo script rimuove automaticamente file `.env` e varianti, ma verifica sempre la copia
 - **Git History**: Le copie non includono la storia git (usa `git clone` per quello)
 - **Validazione Nome**: Il nome può contenere solo lettere, numeri, trattini (-) e underscore (_)
