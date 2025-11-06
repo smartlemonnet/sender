@@ -1,5 +1,8 @@
-# Copie temporanee di sender
-sender-ui-*/
+# Copie temporanee di sender (usa nomi specifici per evitare conflitti)
+sender-ui-copy*
+sender-ui-backup*
+sender-ui-test*
+sender-ui-demo*
 *-copy/
 *-backup/
 

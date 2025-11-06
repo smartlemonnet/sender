@@ -7,6 +7,10 @@ Questa guida spiega come creare copie dell'applicazione Sender per diversi ambie
 Utilizza lo script `copy-sender.sh` per creare rapidamente una copia:
 
 ```bash
+# Rendi eseguibile lo script (solo la prima volta)
+chmod +x copy-sender.sh
+
+# Crea una copia
 ./copy-sender.sh nome-nuova-istanza
 ```
 

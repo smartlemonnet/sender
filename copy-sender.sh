@@ -40,10 +40,19 @@ cp -r "$SOURCE_DIR" "$TARGET_DIR"
 
 # Rimuovi file sensibili dalla copia
 echo "🔒 Rimozione file sensibili..."
-rm -f "$TARGET_DIR/.env" "$TARGET_DIR/.env.local" "$TARGET_DIR/.env.*.local" 2>/dev/null || true
+find "$TARGET_DIR" -name ".env*" -type f -delete 2>/dev/null || true
 
 # Estrai il nome corrente dal package.json sorgente
+if [ ! -f "$SOURCE_DIR/package.json" ]; then
+  echo "Errore: $SOURCE_DIR/package.json non trovato"
+  exit 1
+fi
+
 CURRENT_NAME=$(grep -o '"name": "[^"]*"' "$SOURCE_DIR/package.json" | cut -d'"' -f4)
+if [ -z "$CURRENT_NAME" ]; then
+  echo "Errore: Nome non trovato in $SOURCE_DIR/package.json"
+  exit 1
+fi
 
 # Escape dei caratteri speciali per sed
 ESCAPED_CURRENT_NAME=$(escape_for_sed "$CURRENT_NAME")

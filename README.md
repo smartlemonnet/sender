@@ -30,6 +30,10 @@ Questa iterazione riguarda **solo la progettazione dell'interfaccia (frontend st
 Per creare una copia dell'applicazione Sender (per ambienti diversi, backup, o template):
 
 ```bash
+# Rendi eseguibile lo script (solo la prima volta)
+chmod +x copy-sender.sh
+
+# Crea una copia
 ./copy-sender.sh nome-nuova-istanza
 ```
 
