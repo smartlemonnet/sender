@@ -12,8 +12,12 @@ Utilizza lo script `copy-sender.sh` per creare rapidamente una copia:
 
 Lo script:
 - Copia tutti i file da `sender-ui` alla nuova directory
+- Rimuove automaticamente file sensibili (.env, .env.local, ecc.)
 - Aggiorna automaticamente `package.json` con il nuovo nome
 - Aggiorna il README con riferimenti al nuovo nome
+- Valida il nome per prevenire problemi di sicurezza
+
+**Nota di sicurezza**: Il nome può contenere solo lettere, numeri, trattini (-) e underscore (_).
 
 Dopo aver eseguito lo script:
 
@@ -111,8 +115,9 @@ tar -xzf sender-backup-YYYYMMDD.tar.gz
 
 - **Node Modules**: Le copie non includono `node_modules` (execute `npm install`)
 - **Build Artifacts**: Le copie non includono `.next` (execute `npm run build`)
-- **File Sensibili**: Non copiare file `.env` con credenziali in repository pubblici
+- **File Sensibili**: Lo script rimuove automaticamente file `.env` e varianti, ma verifica sempre la copia
 - **Git History**: Le copie non includono la storia git (usa `git clone` per quello)
+- **Validazione Nome**: Il nome può contenere solo lettere, numeri, trattini (-) e underscore (_)
 
 ## Troubleshooting
 
