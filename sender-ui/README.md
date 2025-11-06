@@ -11,7 +11,19 @@ npm run lint # verifica ESLint/TypeScript
 npm run build && npm run start # simulazione produzione
 ```
 
-Per distribuire via FTP genera gli asset con `npm run build` e carica la cartella `.next`/`public` secondo le necessità del server.
+## Come Copiare Sender
+
+Per creare una copia di questa istanza di Sender:
+
+```bash
+# Rendi eseguibile lo script (solo la prima volta)
+chmod +x copy-sender.sh
+
+# Crea una copia
+./copy-sender.sh nome-nuova-istanza
+```
+
+Per dettagli completi, consulta [COPIA-SENDER.md](./COPIA-SENDER.md).
 
 ## Mappa delle schermate
 
