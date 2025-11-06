@@ -1,3 +1,5 @@
+'use client';
+
 import Link from "next/link";
 
 // TODO: Collegare form di accesso con Supabase Auth / SSO Bluelime.
