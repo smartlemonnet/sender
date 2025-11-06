@@ -25,8 +25,19 @@ Questa iterazione riguarda **solo la progettazione dell'interfaccia (frontend st
 3. Popolare schermate chiave con dati fittizi e stati vuoti.
 4. Documentare collegamenti futuri verso backend/Supabase.
 
+## Copia di Sender
+
+Per creare una copia dell'applicazione Sender (per ambienti diversi, backup, o template):
+
+```bash
+./copy-sender.sh nome-nuova-istanza
+```
+
+Consulta [COPIA-SENDER.md](./COPIA-SENDER.md) per la guida completa sulla copia e il deployment.
+
 ## Stato attuale (Nov 2025)
 - ✅ Progetto Next.js creato (`/sender-ui`) con layout completo e tutte le schermate MVP.
 - ✅ Dati mock e placeholder `TODO` per collegamenti Supabase/Mailcow/Stripe.
 - ✅ Documentazione aggiornata in `sender-ui/README.md` con mappa rotte e roadmap integrazioni.
+- ✅ Script e documentazione per creare copie dell'applicazione (`copy-sender.sh`, `COPIA-SENDER.md`).
 - ⏳ Fase successiva: modellare schema Supabase e sostituire i mock con query reali + servizi backend.
