@@ -1,11 +1,11 @@
 type Tone = "info" | "success" | "warning" | "danger" | "neutral";
 
 const TONE_MAP: Record<Tone, string> = {
-  info: "bg-blue-50 text-blue-600 border-blue-100",
-  success: "bg-emerald-50 text-emerald-600 border-emerald-100",
-  warning: "bg-amber-50 text-amber-600 border-amber-100",
-  danger: "bg-rose-50 text-rose-600 border-rose-100",
-  neutral: "bg-slate-100 text-slate-600 border-slate-200",
+  info: "bg-blue-500/10 text-blue-400 border-blue-500/20 backdrop-blur-sm",
+  success: "bg-[#06FF00]/10 text-[#06FF00] border-[#06FF00]/20 backdrop-blur-sm",
+  warning: "bg-amber-500/10 text-amber-400 border-amber-500/20 backdrop-blur-sm",
+  danger: "bg-rose-500/10 text-rose-400 border-rose-500/20 backdrop-blur-sm",
+  neutral: "bg-slate-500/10 text-slate-400 border-slate-500/20 backdrop-blur-sm",
 };
 
 export function StatusPill({ label, tone = "neutral" }: { label: string; tone?: Tone }) {

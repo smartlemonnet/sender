@@ -57,7 +57,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <div className="relative flex min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+    <div className="relative flex min-h-screen bg-[#0A0A0A] text-slate-50">
+      {/* Animated background gradient */}
+      <div className="pointer-events-none fixed inset-0 opacity-30">
+        <div className="absolute left-1/4 top-0 h-96 w-96 rounded-full bg-[#06FF00]/20 blur-[120px]" />
+        <div className="absolute right-1/4 top-1/3 h-96 w-96 rounded-full bg-emerald-500/20 blur-[120px]" />
+      </div>
+
       <AppSidebar
         sections={NAV_SECTIONS}
         activePath={pathname}
@@ -65,7 +71,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         onMobileClose={() => setIsMobileNavOpen(false)}
       />
 
-      <div className="flex flex-1 flex-col lg:pl-72">
+      <div className="relative z-10 flex flex-1 flex-col lg:pl-72">
         <AppTopbar
           activeItemLabel={activeItem?.label ?? "Dashboard"}
           onOpenMobileNav={() => setIsMobileNavOpen(true)}

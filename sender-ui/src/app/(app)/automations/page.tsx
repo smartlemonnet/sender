@@ -11,20 +11,20 @@ import { PageHeader } from "@/components/ui/page-header";
 import { StatusPill } from "@/components/ui/status-pill";
 
 const panel =
-  "rounded-2xl border border-[var(--border)] bg-[var(--surface)]/90 p-6 shadow-[0_35px_60px_-45px_rgba(15,23,42,0.45)]";
+  "rounded-2xl border border-white/10 bg-black/40 p-6 shadow-[0_0_40px_rgba(6,255,0,0.08)] backdrop-blur";
 
-// TODO: Popolare nodi automation dal backend (Supabase flows + Mailcow status).
+// TODO: Populate automation nodes from backend (Supabase flows + Mailcow status).
 const automationNodes = [
   {
     id: "trigger",
     title: "Trigger: Lead import",
-    description: "Segmento ICP · Fonte Salesforce",
+    description: "ICP Segment · Salesforce source",
     tone: "info" as const,
     position: { top: "40px", left: "60px" },
   },
   {
     id: "condition",
-    title: "Condizione",
+    title: "Condition",
     description: "Engagement score ≥ 65",
     tone: "warning" as const,
     position: { top: "220px", left: "140px" },
@@ -32,28 +32,28 @@ const automationNodes = [
   {
     id: "emailA",
     title: "Email A",
-    description: "Sequenza onboarding",
+    description: "Onboarding sequence",
     tone: "success" as const,
     position: { top: "120px", left: "360px" },
   },
   {
     id: "wait",
-    title: "Wait 2 giorni",
-    description: "Coordinato con timezone contatto",
+    title: "Wait 2 days",
+    description: "Coordinated with contact timezone",
     tone: "neutral" as const,
     position: { top: "300px", left: "360px" },
   },
   {
     id: "webhook",
-    title: "Webhook CRM",
-    description: "Aggiorna stage pipeline",
+    title: "CRM Webhook",
+    description: "Update pipeline stage",
     tone: "info" as const,
     position: { top: "190px", left: "580px" },
   },
   {
     id: "branch",
-    title: "Split comportamento",
-    description: "Se reply → chiama sales",
+    title: "Behavior Split",
+    description: "If reply → call sales",
     tone: "success" as const,
     position: { top: "360px", left: "580px" },
   },
@@ -61,8 +61,8 @@ const automationNodes = [
 
 const nodeToneLabels = {
   info: "Sync",
-  warning: "Filtro",
-  success: "Azione",
+  warning: "Filter",
+  success: "Action",
   neutral: "Delay",
   danger: "Alert",
 } as const;
@@ -71,24 +71,24 @@ export default function AutomationsPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="Automazioni"
-        description="Costruisci percorsi drag & drop per orchestrare campagne, CRM e provisioning mailbox."
+        title="Automations"
+        description="Build drag & drop workflows to orchestrate campaigns, CRM, and mailbox provisioning."
         breadcrumbs={[
           { label: "App" },
           { label: "Automations" },
         ]}
         actions={
           <div className="flex items-center gap-3">
-            <button className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-semibold text-[var(--foreground)] hover:border-blue-200">
+            <button className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white hover:border-[#06FF00]/30">
               <Download className="h-4 w-4" />
-              Blueprint library
+              Blueprint Library
             </button>
             <Link
               href="/automations"
-              className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 hover:brightness-110"
+              className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-[#06FF00] via-emerald-500 to-lime-500 px-4 py-2 text-sm font-semibold text-black shadow-[0_0_30px_rgba(6,255,0,0.3)] hover:brightness-110"
             >
               <Workflow className="h-4 w-4" />
-              Nuovo scenario
+              New Scenario
             </Link>
           </div>
         }
@@ -98,14 +98,14 @@ export default function AutomationsPage() {
         <div className={`${panel} space-y-5`}> 
           <header className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-semibold text-[var(--foreground)]">Canvas visuale</h2>
-              <p className="text-sm text-[var(--muted)]">Trascina nodi, definisci condizioni e connetti automazioni cross-canale.</p>
+              <h2 className="text-lg font-semibold text-white">Visual Canvas</h2>
+              <p className="text-sm text-slate-400">Drag nodes, define conditions, and connect cross-channel automations.</p>
             </div>
-            <button className="text-sm font-semibold text-blue-600">Mostra log esecuzione</button>
+            <button className="text-sm font-semibold text-[#06FF00]">Show Execution Log</button>
           </header>
 
-          <div className="relative overflow-hidden rounded-3xl border border-dashed border-blue-200/70 bg-gradient-to-br from-blue-50 via-white to-blue-100 p-10">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.18),rgba(59,130,246,0)_55%)]" />
+          <div className="relative overflow-hidden rounded-3xl border border-dashed border-[#06FF00]/30 bg-gradient-to-br from-[#06FF00]/10 via-black/50 to-emerald-500/10 p-10 backdrop-blur">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(6,255,0,0.15),rgba(6,255,0,0)_55%)]" />
             <div className="relative grid min-h-[420px]">
               {automationNodes.map((node) => (
                 <AutomationNode key={node.id} {...node} />
@@ -114,11 +114,11 @@ export default function AutomationsPage() {
               <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 720 420">
                 <path
                   d="M110 80 H210 C240 80 240 160 270 160 H360"
-                  className="fill-none stroke-blue-400/60 stroke-[3]" strokeLinecap="round"
+                  className="fill-none stroke-[#06FF00]/60 stroke-[3]" strokeLinecap="round"
                 />
                 <path
                   d="M270 160 V260 C270 290 310 300 360 300"
-                  className="fill-none stroke-blue-400/40 stroke-[3]" strokeLinecap="round" strokeDasharray="8 8"
+                  className="fill-none stroke-[#06FF00]/40 stroke-[3]" strokeLinecap="round" strokeDasharray="8 8"
                 />
                 <path
                   d="M430 140 H540"
@@ -139,70 +139,70 @@ export default function AutomationsPage() {
 
         <div className={`${panel} space-y-5`}> 
           <header>
-            <h2 className="text-lg font-semibold text-[var(--foreground)]">Blueprint scenario</h2>
-            <p className="mt-1 text-sm text-[var(--muted)]">Configura step, SLA e dipendenze prima del go-live.</p>
+            <h2 className="text-lg font-semibold text-white">Scenario Blueprint</h2>
+            <p className="mt-1 text-sm text-slate-400">Configure steps, SLAs, and dependencies before go-live.</p>
           </header>
 
           <div className="space-y-4">
             {[
               {
-                title: "Orchestrazione",
-                description: "Combina email, webhook, task manuali e aggiornamenti CRM in un'unica vista.",
+                title: "Orchestration",
+                description: "Combine emails, webhooks, manual tasks, and CRM updates in a single view.",
               },
               {
-                title: "Gestione fallimenti",
-                description: "Fallback automatico su caselle alternative e log esportabili per audit.",
+                title: "Failure Management",
+                description: "Automatic fallback to alternative mailboxes and exportable logs for audits.",
               },
               {
-                title: "Sincronizzazione Mailcow",
-                description: "Provisioning caselle e monitoraggio warm-up direttamente dal canvas.",
+                title: "Mailcow Synchronization",
+                description: "Mailbox provisioning and warm-up monitoring directly from the canvas.",
               },
             ].map((item) => (
-              <div key={item.title} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)]/50 px-4 py-4">
-                <h3 className="text-sm font-semibold text-[var(--foreground)]">{item.title}</h3>
-                <p className="mt-1 text-xs text-[var(--muted)]">{item.description}</p>
+              <div key={item.title} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 backdrop-blur">
+                <h3 className="text-sm font-semibold text-white">{item.title}</h3>
+                <p className="mt-1 text-xs text-slate-400">{item.description}</p>
               </div>
             ))}
           </div>
 
-          <div className="rounded-2xl border border-blue-100 bg-blue-50/80 p-4 text-sm text-blue-700">
+          <div className="rounded-2xl border border-[#06FF00]/20 bg-[#06FF00]/10 p-4 text-sm text-[#06FF00] backdrop-blur">
             <div className="flex items-start gap-3">
               <GitBranch className="mt-0.5 h-5 w-5" />
               <div>
-                <p className="font-semibold">Step successivi</p>
-                <p className="text-xs text-blue-700/80">Aggiungi split su aperture e integra sequenza SMS (modulo add-on).</p>
+                <p className="font-semibold">Next Steps</p>
+                <p className="text-xs text-[#06FF00]/80">Add split on opens and integrate SMS sequence (add-on module).</p>
               </div>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)]/60 p-4 text-sm">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm backdrop-blur">
             <div className="flex items-start gap-3">
-              <Rocket className="h-5 w-5 text-blue-600" />
+              <Rocket className="h-5 w-5 text-[#06FF00]" />
               <div className="space-y-2">
-                <p className="font-semibold text-[var(--foreground)]">Checklist go-live</p>
-                <div className="grid gap-2 text-xs text-[var(--muted)]">
+                <p className="font-semibold text-white">Go-Live Checklist</p>
+                <div className="grid gap-2 text-xs text-slate-400">
                   <div className="flex items-center justify-between">
-                    <span>QA copy e personalizzazioni</span>
-                    <StatusPill label="Completato" tone="success" />
+                    <span>QA copy and personalizations</span>
+                    <StatusPill label="Completed" tone="success" />
                   </div>
                   <div className="flex items-center justify-between">
-                    <span>Verifica tracce tracking</span>
-                    <StatusPill label="Da verificare" tone="warning" />
+                    <span>Verify tracking traces</span>
+                    <StatusPill label="To Verify" tone="warning" />
                   </div>
                   <div className="flex items-center justify-between">
-                    <span>Revisione legale & compliance</span>
-                    <StatusPill label="In corso" tone="info" />
+                    <span>Legal & compliance review</span>
+                    <StatusPill label="In Progress" tone="info" />
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-blue-100 bg-blue-50/80 p-4 text-xs text-blue-700">
-            <p className="font-semibold">Collaborazione</p>
-            <p className="mt-1">Invita il team prodotto per commentare ogni nodo e approvare lo scenario.</p>
+          <div className="rounded-2xl border border-[#06FF00]/20 bg-[#06FF00]/10 p-4 text-xs text-[#06FF00] backdrop-blur">
+            <p className="font-semibold">Collaboration</p>
+            <p className="mt-1 text-[#06FF00]/80">Invite the product team to comment on each node and approve the scenario.</p>
             <Link href="/crm" className="mt-3 inline-flex items-center gap-2 text-xs font-semibold">
-              Assegna owner
+              Assign Owner
               <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
@@ -223,15 +223,15 @@ type AutomationNodeProps = {
 function AutomationNode({ title, description, tone, position }: AutomationNodeProps) {
   return (
     <div
-      className="absolute w-60 rounded-2xl border border-[var(--border)] bg-white/90 px-4 py-4 text-sm text-slate-700 shadow-[0_20px_45px_-35px_rgba(15,23,42,0.55)] backdrop-blur-lg"
+      className="absolute w-60 rounded-2xl border border-white/10 bg-black/80 px-4 py-4 text-sm text-slate-300 shadow-[0_0_30px_rgba(6,255,0,0.15)] backdrop-blur-lg"
       style={{ top: position.top, left: position.left }}
     >
       <div className="flex items-center justify-between">
-        <p className="font-semibold text-slate-900">{title}</p>
+        <p className="font-semibold text-white">{title}</p>
         <StatusPill label={nodeToneLabels[tone]} tone={tone} />
       </div>
-      <p className="mt-2 text-xs text-slate-500">{description}</p>
-      <div className="mt-3 inline-flex rounded-full bg-blue-500/10 px-3 py-1 text-[11px] font-semibold text-blue-600">
+      <p className="mt-2 text-xs text-slate-400">{description}</p>
+      <div className="mt-3 inline-flex rounded-full bg-[#06FF00]/10 px-3 py-1 text-[11px] font-semibold text-[#06FF00]">
         Drag node
       </div>
     </div>

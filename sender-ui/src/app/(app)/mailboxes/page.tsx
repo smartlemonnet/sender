@@ -13,18 +13,18 @@ import { PageHeader } from "@/components/ui/page-header";
 import { StatusPill } from "@/components/ui/status-pill";
 
 const panel =
-  "rounded-2xl border border-[var(--border)] bg-[var(--surface)]/90 p-6 shadow-[0_30px_60px_-45px_rgba(15,23,42,0.45)]";
+  "rounded-2xl border border-white/10 bg-black/40 p-6 shadow-[0_0_40px_rgba(6,255,0,0.08)] backdrop-blur";
 
-// TODO: Integrare dati reali da Mailcow/Supabase (table mailboxes + view warmup_status).
+// TODO: Integrate real data from Mailcow/Supabase (table mailboxes + view warmup_status).
 const mailboxes = [
   {
     id: "mb-01",
     address: "outreach@orbitallabs.io",
     domain: "orbitallabs.io",
     plan: "Infinity",
-    status: "Warm-up fase 3",
+    status: "Warm-up Phase 3",
     tone: "info" as const,
-    sendLimit: "1.200/d",
+    sendLimit: "1,200/d",
     replyTo: "sales@orbitallabs.io",
   },
   {
@@ -32,7 +32,7 @@ const mailboxes = [
     address: "pipelines@retailia.eu",
     domain: "retailia.eu",
     plan: "Scale",
-    status: "Attiva",
+    status: "Active",
     tone: "success" as const,
     sendLimit: "900/d",
     replyTo: "crm@retailia.eu",
@@ -42,7 +42,7 @@ const mailboxes = [
     address: "latam@hyperlane.com",
     domain: "hyperlane.com",
     plan: "Starter",
-    status: "In provisioning",
+    status: "Provisioning",
     tone: "warning" as const,
     sendLimit: "—",
     replyTo: "support@hyperlane.com",
@@ -53,24 +53,24 @@ export default function MailboxesPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="Caselle & Domini"
-        description="Provisioning, warm-up e monitoraggio reputazione per caselle dedicate al cold outreach."
+        title="Mailboxes & Domains"
+        description="Provisioning, warm-up, and reputation monitoring for dedicated cold outreach mailboxes."
         breadcrumbs={[
           { label: "App" },
           { label: "Mailboxes" },
         ]}
         actions={
           <div className="flex items-center gap-3">
-            <button className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-semibold text-[var(--foreground)] hover:border-blue-200">
+            <button className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white hover:border-[#06FF00]/30">
               <Layers className="h-4 w-4" />
-              Genera dominio
+              Generate Domain
             </button>
             <Link
               href="/billing"
-              className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 hover:brightness-110"
+              className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-[#06FF00] via-emerald-500 to-lime-500 px-4 py-2 text-sm font-semibold text-black shadow-[0_0_30px_rgba(6,255,0,0.3)] hover:brightness-110"
             >
               <Mail className="h-4 w-4" />
-              Aggiungi casella
+              Add Mailbox
             </Link>
           </div>
         }
@@ -80,42 +80,42 @@ export default function MailboxesPage() {
         <div className={`${panel} space-y-5`}>
           <header className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-semibold text-[var(--foreground)]">Inventario caselle</h2>
-              <p className="text-sm text-[var(--muted)]">Gestione centralizzata con collegamento al cluster Mailcow OVH.</p>
+              <h2 className="text-lg font-semibold text-white">Mailbox Inventory</h2>
+              <p className="text-sm text-slate-400">Centralized management with connection to Mailcow OVH cluster.</p>
             </div>
-            <button className="text-sm font-semibold text-blue-600">Sincronizza ora</button>
+            <button className="text-sm font-semibold text-[#06FF00]">Sync Now</button>
           </header>
 
-          <div className="overflow-hidden rounded-2xl border border-[var(--border)]">
-            <table className="min-w-full divide-y divide-[var(--border)]">
-              <thead className="bg-[var(--surface-muted)]/60 text-xs uppercase tracking-[0.22em] text-[var(--muted)]">
+          <div className="overflow-hidden rounded-2xl border border-white/10">
+            <table className="min-w-full divide-y divide-white/10">
+              <thead className="bg-white/5 text-xs uppercase tracking-[0.22em] text-slate-500">
                 <tr>
-                  <th className="px-4 py-3 text-left">Casella</th>
-                  <th className="px-4 py-3 text-left">Dominio</th>
-                  <th className="px-4 py-3 text-left">Piano</th>
-                  <th className="px-4 py-3 text-left">Invii</th>
-                  <th className="px-4 py-3 text-left">Stato</th>
+                  <th className="px-4 py-3 text-left">Mailbox</th>
+                  <th className="px-4 py-3 text-left">Domain</th>
+                  <th className="px-4 py-3 text-left">Plan</th>
+                  <th className="px-4 py-3 text-left">Sends</th>
+                  <th className="px-4 py-3 text-left">Status</th>
                   <th className="px-4 py-3 text-left">Reply-to</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[var(--border)] text-sm">
+              <tbody className="divide-y divide-white/10 text-sm">
                 {mailboxes.map((mailbox) => (
-                  <tr key={mailbox.id} className="bg-[var(--surface)]/80 transition hover:bg-blue-50/40">
+                  <tr key={mailbox.id} className="bg-black/40 transition hover:bg-[#06FF00]/5">
                     <td className="px-4 py-4">
-                      <div className="font-semibold text-[var(--foreground)]">{mailbox.address}</div>
-                      <p className="text-xs text-[var(--muted)]">ID {mailbox.id}</p>
+                      <div className="font-semibold text-white">{mailbox.address}</div>
+                      <p className="text-xs text-slate-400">ID {mailbox.id}</p>
                     </td>
-                    <td className="px-4 py-4 text-[var(--muted)]">{mailbox.domain}</td>
+                    <td className="px-4 py-4 text-slate-400">{mailbox.domain}</td>
                     <td className="px-4 py-4">
-                      <span className="inline-flex items-center gap-2 rounded-xl bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-600">
+                      <span className="inline-flex items-center gap-2 rounded-xl bg-[#06FF00]/10 px-3 py-1 text-xs font-semibold text-[#06FF00]">
                         {mailbox.plan}
                       </span>
                     </td>
-                    <td className="px-4 py-4 font-semibold text-[var(--foreground)]">{mailbox.sendLimit}</td>
+                    <td className="px-4 py-4 font-semibold text-white">{mailbox.sendLimit}</td>
                     <td className="px-4 py-4">
                       <StatusPill label={mailbox.status} tone={mailbox.tone} />
                     </td>
-                    <td className="px-4 py-4 text-blue-600">{mailbox.replyTo}</td>
+                    <td className="px-4 py-4 text-[#06FF00]">{mailbox.replyTo}</td>
                   </tr>
                 ))}
               </tbody>
@@ -125,66 +125,66 @@ export default function MailboxesPage() {
 
         <div className={`${panel} space-y-5`}>
           <header>
-            <h2 className="text-lg font-semibold text-[var(--foreground)]">Provisioning guidato</h2>
-            <p className="mt-1 text-sm text-[var(--muted)]">Wizard a tre step per onboarding domini personalizzati.</p>
+            <h2 className="text-lg font-semibold text-white">Guided Provisioning</h2>
+            <p className="mt-1 text-sm text-slate-400">Three-step wizard for custom domain onboarding.</p>
           </header>
 
-          <ol className="space-y-3 text-sm text-[var(--muted)]">
-            <li className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)]/60 px-4 py-3">
-              <p className="font-semibold text-[var(--foreground)]">1. Verifica DNS</p>
-              <p className="text-xs">Record SPF, DKIM, DMARC e MX generati automaticamente.</p>
+          <ol className="space-y-3 text-sm text-slate-400">
+            <li className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur">
+              <p className="font-semibold text-white">1. DNS Verification</p>
+              <p className="text-xs">SPF, DKIM, DMARC, and MX records automatically generated.</p>
             </li>
-            <li className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)]/60 px-4 py-3">
-              <p className="font-semibold text-[var(--foreground)]">2. Warm-up intelligente</p>
-              <p className="text-xs">Cicli di invio progressivo coordinati con reputazione IP OVH.</p>
+            <li className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur">
+              <p className="font-semibold text-white">2. Smart Warm-up</p>
+              <p className="text-xs">Progressive sending cycles coordinated with OVH IP reputation.</p>
             </li>
-            <li className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)]/60 px-4 py-3">
-              <p className="font-semibold text-[var(--foreground)]">3. Monitoraggio continuo</p>
-              <p className="text-xs">Alert su bounce rate, spam complaint e throttling provider.</p>
+            <li className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur">
+              <p className="font-semibold text-white">3. Continuous Monitoring</p>
+              <p className="text-xs">Alerts on bounce rate, spam complaints, and provider throttling.</p>
             </li>
           </ol>
 
-          <div className="rounded-2xl border border-blue-100 bg-blue-50/80 p-4 text-sm text-blue-700">
+          <div className="rounded-2xl border border-[#06FF00]/20 bg-[#06FF00]/10 p-4 text-sm text-[#06FF00] backdrop-blur">
             <div className="flex items-start gap-3">
               <ShieldCheck className="mt-0.5 h-5 w-5" />
               <div>
-                <p className="font-semibold">Compliance & reputazione</p>
-                <p className="text-xs text-blue-700/80">Log centralizzati per audit, gestione blacklist e feedback loop provider.</p>
+                <p className="font-semibold">Compliance & Reputation</p>
+                <p className="text-xs text-[#06FF00]/80">Centralized logs for audits, blacklist management, and provider feedback loops.</p>
               </div>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)]/60 p-4 text-sm">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm backdrop-blur">
             <div className="flex items-start gap-3">
-              <Globe2 className="h-5 w-5 text-blue-600" />
+              <Globe2 className="h-5 w-5 text-[#06FF00]" />
               <div className="space-y-2">
-                <p className="font-semibold text-[var(--foreground)]">Cluster OVH</p>
-                <div className="space-y-1 text-xs text-[var(--muted)]">
-                  <p>• VPS-3 · Strasburgo · 8 vCore / 24 GB RAM / 200 GB SSD</p>
+                <p className="font-semibold text-white">OVH Cluster</p>
+                <div className="space-y-1 text-xs text-slate-400">
+                  <p>• VPS-3 · Strasbourg · 8 vCore / 24 GB RAM / 200 GB SSD</p>
                   <p>• IP 51.210.4.94 · IPv6 2001:41d0:404:200::3b95</p>
-                  <p>• Monitor uptime 99,9% · Failover manuale previsto Q2</p>
+                  <p>• 99.9% uptime monitor · Manual failover planned Q2</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-blue-100 bg-blue-50/70 p-4 text-xs text-blue-700">
-            <p className="font-semibold">Bundle corporate</p>
-            <p className="mt-1">Offri pacchetti da 25/50/100 caselle con SLA dedicato e setup personalizzato.</p>
+          <div className="rounded-2xl border border-[#06FF00]/20 bg-[#06FF00]/10 p-4 text-xs text-[#06FF00] backdrop-blur">
+            <p className="font-semibold">Corporate Bundle</p>
+            <p className="mt-1 text-[#06FF00]/80">Offer 25/50/100 mailbox packages with dedicated SLA and custom setup.</p>
             <Link href="/billing" className="mt-3 inline-flex items-center gap-2 text-xs font-semibold">
-              Crea offerta
+              Create Offer
               <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)]/60 p-4 text-sm">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm backdrop-blur">
             <div className="flex items-start gap-3">
-              <Zap className="h-5 w-5 text-blue-600" />
+              <Zap className="h-5 w-5 text-[#06FF00]" />
               <div className="space-y-1">
-                <p className="font-semibold text-[var(--foreground)]">API & integrazioni</p>
-                <p className="text-xs text-[var(--muted)]">Provisioning via API REST, Webhook per eventi mail e moduli no-code per i team marketing.</p>
-                <Link href="/settings" className="inline-flex items-center gap-2 text-xs font-semibold text-blue-600">
-                  Gestisci credenziali
+                <p className="font-semibold text-white">API & Integrations</p>
+                <p className="text-xs text-slate-400">Provisioning via REST API, webhooks for mail events, and no-code modules for marketing teams.</p>
+                <Link href="/settings" className="inline-flex items-center gap-2 text-xs font-semibold text-[#06FF00]">
+                  Manage Credentials
                   <CheckCircle2 className="h-3.5 w-3.5" />
                 </Link>
               </div>

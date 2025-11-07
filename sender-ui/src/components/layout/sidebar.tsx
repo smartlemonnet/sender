@@ -39,20 +39,20 @@ export function AppSidebar({ sections, activePath, isMobileOpen, onMobileClose }
   }, [pathname]);
 
   const content = (
-    <div className="flex h-full flex-col gap-6 overflow-hidden border-r border-[var(--border)] bg-[var(--surface)]/95 px-4 pb-6 pt-6 shadow-[8px_0_30px_-20px_rgba(15,23,42,0.35)] backdrop-blur lg:px-6">
+    <div className="flex h-full flex-col gap-6 overflow-hidden border-r border-white/10 bg-black/50 px-4 pb-6 pt-6 shadow-[8px_0_30px_-20px_rgba(6,255,0,0.15)] backdrop-blur lg:px-6">
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-lg">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#06FF00] to-emerald-500 text-black shadow-[0_0_30px_rgba(6,255,0,0.4)]">
             <Sparkles className="h-5 w-5" />
           </div>
           <div>
-            <p className="text-sm font-medium text-blue-600">Bluelime Universe</p>
-            <p className="text-lg font-semibold text-[var(--foreground)]">Sender Control</p>
+            <p className="text-sm font-medium text-[#06FF00]">BlueLime Universe</p>
+            <p className="text-lg font-semibold text-white">Sender Control</p>
           </div>
         </div>
         <button
           type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface-muted)]/60 text-[var(--muted)] transition hover:text-[var(--foreground)] lg:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 transition hover:border-[#06FF00]/30 hover:text-white lg:hidden"
           onClick={onMobileClose}
         >
           <X className="h-5 w-5" />
@@ -63,7 +63,7 @@ export function AppSidebar({ sections, activePath, isMobileOpen, onMobileClose }
         {sections.map((section) => (
           <Fragment key={section.title ?? "main"}>
             {section.title ? (
-              <p className="px-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
+              <p className="px-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
                 {section.title}
               </p>
             ) : null}
@@ -81,8 +81,8 @@ export function AppSidebar({ sections, activePath, isMobileOpen, onMobileClose }
                       "group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all",
                       "border border-transparent",
                       isActive
-                        ? "border-blue-100 bg-blue-50 text-blue-600 shadow-[0_12px_30px_-18px_rgba(37,99,235,0.65)]"
-                        : "text-[var(--muted)] hover:border-[var(--border)] hover:bg-[var(--surface-muted)]/70 hover:text-[var(--foreground)]",
+                        ? "border-[#06FF00]/20 bg-[#06FF00]/10 text-[#06FF00] shadow-[0_0_20px_rgba(6,255,0,0.15)]"
+                        : "text-slate-400 hover:border-white/10 hover:bg-white/5 hover:text-white",
                     )}
                   >
                     <span className="flex items-center gap-3">
@@ -90,7 +90,7 @@ export function AppSidebar({ sections, activePath, isMobileOpen, onMobileClose }
                       <span className="font-medium">{item.label}</span>
                     </span>
                     {item.badge ? (
-                      <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-600">
+                      <span className="rounded-full bg-[#06FF00]/20 px-2 py-0.5 text-xs font-semibold text-[#06FF00]">
                         {item.badge}
                       </span>
                     ) : null}
@@ -102,16 +102,16 @@ export function AppSidebar({ sections, activePath, isMobileOpen, onMobileClose }
         ))}
       </nav>
 
-      <div className="rounded-2xl border border-[var(--border)] bg-gradient-to-br from-blue-600 via-indigo-600 to-sky-500 p-5 text-white shadow-lg">
-        <p className="text-sm font-semibold">Cold outreach senza limiti</p>
-        <p className="mt-1 text-sm text-blue-50/80">
-          Sblocca automazioni avanzate, caselle aggiuntive e report potenziati per il tuo team.
+      <div className="rounded-2xl border border-[#06FF00]/20 bg-gradient-to-br from-[#06FF00]/10 via-emerald-500/10 to-lime-500/10 p-5 text-white shadow-[0_0_30px_rgba(6,255,0,0.15)] backdrop-blur">
+        <p className="text-sm font-semibold">Unlimited Cold Outreach</p>
+        <p className="mt-1 text-sm text-slate-300">
+          Unlock advanced automations, additional mailboxes, and enhanced reports for your team.
         </p>
         <Link
           href="/billing"
-          className="mt-4 inline-flex items-center justify-center rounded-xl bg-white/15 px-4 py-2 text-sm font-semibold backdrop-blur transition hover:bg-white/25"
+          className="mt-4 inline-flex items-center justify-center rounded-xl bg-[#06FF00]/20 px-4 py-2 text-sm font-semibold text-[#06FF00] backdrop-blur transition hover:bg-[#06FF00]/30"
         >
-          Aggiorna Piano
+          Upgrade Plan
         </Link>
       </div>
     </div>
@@ -122,7 +122,7 @@ export function AppSidebar({ sections, activePath, isMobileOpen, onMobileClose }
       {/* Mobile overlay */}
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm transition-opacity lg:hidden",
+          "fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity lg:hidden",
           isMobileOpen ? "opacity-100" : "pointer-events-none opacity-0",
         )}
         onClick={onMobileClose}
@@ -130,7 +130,7 @@ export function AppSidebar({ sections, activePath, isMobileOpen, onMobileClose }
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-72 -translate-x-full bg-[var(--surface)] shadow-xl transition-transform lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-50 w-72 -translate-x-full bg-black/95 shadow-xl transition-transform lg:translate-x-0",
           isMobileOpen && "translate-x-0",
         )}
       >
@@ -139,7 +139,7 @@ export function AppSidebar({ sections, activePath, isMobileOpen, onMobileClose }
 
       <button
         type="button"
-        className="fixed left-4 top-4 z-40 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] shadow-lg lg:hidden"
+        className="fixed left-4 top-4 z-40 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-black/80 text-white shadow-lg backdrop-blur lg:hidden"
         onClick={onMobileClose}
         aria-label="Close mobile navigation"
       >
